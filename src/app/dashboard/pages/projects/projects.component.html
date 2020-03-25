@@ -1,1 +1,6 @@
-<p>projects works!</p>
+<mat-card *ngFor="let project of projectSearchResult.components">
+  <mat-card-header>
+    <mat-card-title>{{ project.name }}</mat-card-title>
+    <mat-card-subtitle>Last Analysis on {{ project.lastAnalysisDate | date: 'medium' }}</mat-card-subtitle>
+  </mat-card-header>
+</mat-card>
