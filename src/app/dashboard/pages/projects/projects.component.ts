@@ -14,9 +14,13 @@ export class ProjectsComponent implements OnInit {
   constructor(private tplSonarQubeService: TplSonarQubeService) { }
 
   ngOnInit(): void {
-    this.tplSonarQubeService.searchProjects().subscribe((projectSearchResult: ProjectSearchResult) => {
+    this.fetchProjects();
+  }
+
+  fetchProjects() {
+    this.tplSonarQubeService.searchProjects()
+    .subscribe((projectSearchResult: ProjectSearchResult) => {
       this.projectSearchResult = projectSearchResult;
     });
   }
-
 }

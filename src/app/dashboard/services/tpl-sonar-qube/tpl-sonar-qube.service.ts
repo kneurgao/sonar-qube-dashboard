@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { DashboardModule } from '../../dashboard.module';
 import { ProjectSearchResult } from './models/project-search-result.model';
+import { ProjectMeasures } from './models/project-measures.model';
 
 @Injectable({
   providedIn: DashboardModule
@@ -15,6 +16,7 @@ export class TplSonarQubeService {
     headers: {
       Authorization: 'Basic ' + this.AUTH_TOKEN
     },
+    params: null,
     withCredentials: true
   };
 
@@ -22,5 +24,14 @@ export class TplSonarQubeService {
 
   searchProjects() {
     return this.http.get<ProjectSearchResult>(this.URL_PREFIX + '/projects/search', this.API_OPTIONS);
+  }
+
+  getComponentMeasures(component: string, metricKeys: string[], additionalFields: string[]) {
+    this.API_OPTIONS.params = {
+      component,
+      metricKeys: metricKeys.join(','),
+      additionalFields: additionalFields.join(',')
+    };
+    return this.http.get<ProjectMeasures>(this.URL_PREFIX + '/measures/component', this.API_OPTIONS);
   }
 }
