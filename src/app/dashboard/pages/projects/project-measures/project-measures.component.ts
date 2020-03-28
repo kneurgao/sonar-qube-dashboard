@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { faBug, faUnlock, faRadiationAlt, faClone, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import { ProjectComponent } from '../../../services/tpl-sonar-qube/models/project-component.model';
 import { TplSonarQubeService } from '../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
@@ -14,7 +15,13 @@ import { Metric } from '../../../services/tpl-sonar-qube/models/metric.model';
 export class ProjectMeasuresComponent implements OnInit {
 
   @Input() projectComponent: ProjectComponent;
-  projectMeasures: ProjectMeasures;
+  passed: boolean;
+  projectMetricMeasures: {
+    name: string,
+    value: string,
+    rating: string,
+    icon: IconDefinition
+  }[] = [];
 
   constructor(private tplSonarQubeService: TplSonarQubeService) { }
 
@@ -38,37 +45,72 @@ export class ProjectMeasuresComponent implements OnInit {
       'metrics'
     ];
     this.tplSonarQubeService.getComponentMeasures(this.projectComponent.key, metricKeys, additionalFields)
-    .subscribe((projectMeasures: ProjectMeasures) => {
-      this.projectMeasures = projectMeasures;
-    });
+    .subscribe(this.parseProjectMeasures.bind(this));
   }
 
-  getMeasure(key: string): Measure {
-    return this.projectMeasures.component.measures.find(measure => measure.metric === key);
+  parseProjectMeasures(projectMeasures: ProjectMeasures) {
+    const alertStatusMeasure = this.getMeasure(projectMeasures, 'alert_status');
+    this.passed = alertStatusMeasure.value === 'OK';
+
+    this.parseProjectMeasure(projectMeasures, 'bugs', 'reliability_rating', faBug);
+    this.parseProjectMeasure(projectMeasures, 'vulnerabilities', 'security_rating', faUnlock);
+    this.parseProjectMeasure(projectMeasures, 'code_smells', 'sqale_rating', faRadiationAlt);
+    this.parseProjectMeasure(projectMeasures, 'duplicated_lines_density', 'duplicated_lines_density', faClone);
   }
 
-  getMetric(key: string): Metric {
-    return this.projectMeasures.metrics.find(metric => metric.key === key);
+  private parseProjectMeasure(
+    projectMeasures: ProjectMeasures,
+    measureKey: string,
+    ratingMeasureKey: string,
+    icon: IconDefinition) {
+    const metric = this.getMetric(projectMeasures, measureKey);
+    const measure = this.getMeasure(projectMeasures, measureKey);
+
+    const projectMetricMeasure = {
+      name: metric.name,
+      value: measure.value,
+      rating: null,
+      icon
+    };
+
+    const ratingMeasure = this.getMeasure(projectMeasures, ratingMeasureKey);
+    projectMetricMeasure.rating = ratingMeasureKey === 'duplicated_lines_density' ?
+      this.getDuplicationsRating(ratingMeasure.value) : this.getRating(ratingMeasure.value);
+
+    this.projectMetricMeasures.push(projectMetricMeasure);
   }
 
-  getRatingClass(key: string): string {
-    return 'rating-' + parseInt(this.getMeasure(key).value, 10);
+  getMeasure(projectMeasures: ProjectMeasures, key: string): Measure {
+    return projectMeasures.component.measures.find(measure => measure.metric === key);
   }
 
-  getDuplicationsRatingClass(): string {
-    const duplicatedLinesDensity = parseFloat(this.getMeasure('duplicated_lines_density').value);
-    let ratingClass = 'rating-';
-    if (duplicatedLinesDensity > 20) {
-      ratingClass += 5;
-    } else if (duplicatedLinesDensity > 10) {
-      ratingClass += 4;
-    } else if (duplicatedLinesDensity > 5) {
-      ratingClass += 3;
-    } else if (duplicatedLinesDensity >= 3) {
-      ratingClass += 2;
-    } else {
-      ratingClass += 1;
+  getMetric(projectMeasures: ProjectMeasures, key: string): Metric {
+    return projectMeasures.metrics.find(metric => metric.key === key);
+  }
+
+  getRating(value: string) {
+    const rating = parseInt(value, 10);
+    switch (rating) {
+      case 1: return 'a';
+      case 2: return 'b';
+      case 3: return 'c';
+      case 4: return 'd';
+      case 5: return 'e';
+      default: return '';
     }
-    return ratingClass;
+  }
+
+  getDuplicationsRating(value: string): string {
+    const duplicatedLinesDensity = parseFloat(value);
+    if (duplicatedLinesDensity > 20) {
+      return 'e';
+    } else if (duplicatedLinesDensity > 10) {
+      return 'd';
+    } else if (duplicatedLinesDensity > 5) {
+      return 'c';
+    } else if (duplicatedLinesDensity >= 3) {
+      return 'b';
+    }
+    return 'a';
   }
 }

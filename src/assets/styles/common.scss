@@ -1,20 +1,31 @@
-.rating-1 {
+.rating {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  text-shadow: 0 0 1px rgba(0,0,0,.35);
+}
+
+.rating-a {
   background-color: #0a0;
   color: #fff;
 }
-.rating-2 {
+.rating-b {
   background-color: #80CC00;
-  color: #fff;
 }
-.rating-3 {
+.rating-c {
   background-color: #eabe06;
-  color: #fff;
 }
-.rating-4 {
+.rating-d {
   background-color: #ed7d20;
-  color: #fff;
 }
-.rating-5 {
+.rating-e {
   background-color: #d4333f;
   color: #fff;
 }
