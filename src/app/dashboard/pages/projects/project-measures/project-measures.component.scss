@@ -1,23 +1,12 @@
-@import '~@angular/material/theming';
 @import '../../../../../assets/styles/common.scss';
 
-:host {
-  width: 100%;
-  height: inherit;
-
-  .mat-card {
-    height: calc(100% - 48px);
-    @include mat-elevation(2);
-
-    .mat-chip {
-      .mat-icon {
-        width: 16px;
-        height: 16px;
-        font-size: 16px;
-        margin: 0 4px 2px 0;
-        font-weight: normal;
-      }
-    }
-  }
-  margin: 1rem;
+.project-measure:not(:first-child)::after {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 30px;
+  margin-top: -18px;
+  border-right: 1px solid #e6e6e6;
+  content: "";
 }
