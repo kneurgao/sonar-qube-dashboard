@@ -1,16 +1,7 @@
+import { Paging } from './paging.model';
+import { ProjectComponent } from './project-component.model';
+
 export class ProjectSearchResult {
-  paging: {
-    pageIndex: number,
-    pageSize: number,
-    total: number
-  };
-  components: {
-    organization: string,
-    key: string,
-    name: string,
-    qualifier: string,
-    visibility: string,
-    lastAnalysisDate: Date,
-    revision: string
-  }[];
+  paging: Paging;
+  components: ProjectComponent[];
 }

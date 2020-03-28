@@ -1,6 +1,5 @@
-<mat-card *ngFor="let project of projectSearchResult.components">
-  <mat-card-header>
-    <mat-card-title>{{ project.name }}</mat-card-title>
-    <mat-card-subtitle>Last Analysis on {{ project.lastAnalysisDate | date: 'medium' }}</mat-card-subtitle>
-  </mat-card-header>
-</mat-card>
+<mat-grid-list cols="3" rowHeight="1:0.44" *ngIf="projectSearchResult">
+  <mat-grid-tile *ngFor="let projectComponent of projectSearchResult.components">
+    <tpl-project-measures [projectComponent]="projectComponent"></tpl-project-measures>
+  </mat-grid-tile>
+</mat-grid-list>

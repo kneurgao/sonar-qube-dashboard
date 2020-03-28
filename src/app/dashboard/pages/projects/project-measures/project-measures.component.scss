@@ -1,0 +1,23 @@
+@import '~@angular/material/theming';
+@import '../../../../../assets/styles/common.scss';
+
+:host {
+  width: 100%;
+  height: inherit;
+
+  .mat-card {
+    height: calc(100% - 48px);
+    @include mat-elevation(2);
+
+    .mat-chip {
+      .mat-icon {
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+        margin: 0 4px 2px 0;
+        font-weight: normal;
+      }
+    }
+  }
+  margin: 1rem;
+}

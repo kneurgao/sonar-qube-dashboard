@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ projectComponent.name }}</mat-card-title>
+    <mat-card-subtitle>Last Analysis on {{ projectComponent.lastAnalysisDate | date: 'medium' }}</mat-card-subtitle>
+
+    <mat-chip-list *ngIf="projectMeasures">
+      <mat-chip [ngClass]="getMeasure('alert_status').value == 'ERROR' ? 'rating-5' : 'rating-1'">
+        <span>{{ getMeasure('alert_status').value == 'ERROR' ? 'Failed' : 'Passed' }}</span>
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-chip-list *ngIf="projectMeasures">
+      <mat-chip [ngClass]="getRatingClass('reliability_rating')">
+        <mat-icon>bug_report</mat-icon>
+        <span>{{ getMeasure('bugs').value }} {{ getMetric('bugs').name }}</span>
+      </mat-chip>
+
+      <mat-chip [ngClass]="getRatingClass('security_rating')">
+        <mat-icon>lock_open</mat-icon>
+        <span>{{ getMeasure('vulnerabilities').value }} {{ getMetric('vulnerabilities').name }}</span>
+      </mat-chip>
+
+      <mat-chip [ngClass]="getRatingClass('sqale_rating')">
+        <mat-icon>report_problem</mat-icon>
+        <span>{{ getMeasure('code_smells').value }} {{ getMetric('code_smells').name }}</span>
+      </mat-chip>
+
+      <mat-chip [ngClass]="getDuplicationsRatingClass()">
+        <mat-icon>file_copy</mat-icon>
+        <span>{{ getMeasure('duplicated_lines_density').value }} {{ getMetric('duplicated_lines_density').name }}</span>
+      </mat-chip>
+    </mat-chip-list>
+  </mat-card-content>
+</mat-card>
