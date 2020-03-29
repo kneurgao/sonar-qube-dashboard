@@ -1,9 +1,10 @@
 import { Measure } from './measure.model';
-import { Metric } from './metric.model';
 
 export class ProjectMeasures {
-  component: {
-    measures: Measure[];
-  };
-  metrics: Metric[]
+  passed: boolean;
+  measures: Measure[];
+
+  constructor() {
+    this.measures = [];
+  }
 }

@@ -1,27 +1,27 @@
-<div class="card ml-3 mt-3">
+<div class="card ml-3 mt-3 shadow-sm">
   <div class="card-body">
     <div class="row">
-      <h6 class="card-title col-sm-8 col-lg-10 text-truncate">
+      <h6 class="card-title col-10 col-sm-8 col-lg-10 text-truncate">
         <span>{{ projectComponent.name }}</span>
       </h6>
-      <div class="col-sm-4 col-lg-2 pl-0">
-        <span class="badge badge-pill float-right" [ngClass]="'rating-' + (passed ? 'a' : 'e')">
-          <span>{{ passed ? 'Passed' : 'Failed' }}</span>
+      <div class="col-2 col-sm-4 col-lg-2 pl-0" *ngIf="projectMeasures">
+        <span class="badge badge-pill float-right" [ngClass]="'rating-' + (projectMeasures.passed ? 'a' : 'e')">
+          <span>{{ projectMeasures.passed ? 'Passed' : 'Failed' }}</span>
         </span>
       </div>
     </div>
 
-    <div class="row">
-      <div *ngFor="let projectMetricMeasure of projectMetricMeasures"
-            class="col-sm-3 my-2 project-measure text-center">
+    <div class="row" *ngIf="projectMeasures">
+      <div *ngFor="let projectMetricMeasure of projectMeasures.measures"
+            class="col-6 col-sm-3 my-2 project-measure text-center">
         <h6 class="font-weight-normal mb-0">
           {{ projectMetricMeasure.value }}
           <span class="rating" [ngClass]="'rating-' + projectMetricMeasure.rating">
             {{ projectMetricMeasure.rating | uppercase }}
           </span>
         </h6>
-        <div>
-          <small class="text-truncate">
+        <div class="text-truncate">
+          <small>
             <fa-icon [icon]="projectMetricMeasure.icon"></fa-icon>
             {{ projectMetricMeasure.name }}
           </small>
