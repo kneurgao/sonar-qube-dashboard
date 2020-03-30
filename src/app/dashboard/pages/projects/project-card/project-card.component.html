@@ -4,9 +4,9 @@
       <h6 class="card-title col-10 col-sm-8 col-lg-10 text-truncate">
         <span>{{ projectComponent.name }}</span>
       </h6>
-      <div class="col-2 col-sm-4 col-lg-2 pl-0" *ngIf="projectMeasures">
-        <span class="badge badge-pill float-right" [ngClass]="'rating-' + (projectMeasures.passed ? 'a' : 'e')">
-          <span>{{ projectMeasures.passed ? 'Passed' : 'Failed' }}</span>
+      <div class="col-2 col-sm-4 col-lg-2 pl-0">
+        <span class="badge badge-pill float-right status" [ngClass]="'rating-' + (passed ? 'a' : 'e')">
+          <span>{{ passed ? 'Passed' : 'Failed' }}</span>
         </span>
       </div>
     </div>
@@ -15,29 +15,14 @@
       <li ngbNavItem>
         <a ngbNavLink>Measures</a>
         <ng-template ngbNavContent>
-          <div class="row" *ngIf="projectMeasures">
-            <div *ngFor="let projectMetricMeasure of projectMeasures.measures"
-                  class="col-6 col-sm-3 my-2 project-measure text-center">
-              <h6 class="font-weight-normal mb-0">
-                {{ projectMetricMeasure.value }}
-                <span class="rating" [ngClass]="'rating-' + projectMetricMeasure.rating">
-                  {{ projectMetricMeasure.rating | uppercase }}
-                </span>
-              </h6>
-              <div class="text-truncate">
-                <small>
-                  <fa-icon [icon]="projectMetricMeasure.icon"></fa-icon>
-                  {{ projectMetricMeasure.name }}
-                </small>
-              </div>
-            </div>
-          </div>
+          <tpl-project-measures [projectKey]="projectComponent.key"
+                                (statusChanged)="setStatus($event)"></tpl-project-measures>
         </ng-template>
       </li>
       <li ngbNavItem>
         <a ngbNavLink>Trend</a>
         <ng-template ngbNavContent>
-          <tpl-project-trend [projectTrend]="projectTrend"></tpl-project-trend>
+          <tpl-project-trend [projectKey]="projectComponent.key"></tpl-project-trend>
         </ng-template>
       </li>
     </ul>

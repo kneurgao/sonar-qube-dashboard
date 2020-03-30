@@ -1,5 +1,9 @@
 @import '../../../../../assets/styles/common.scss';
 
+.status {
+  color: #fff;
+}
+
 .nav-tabs {
   border-bottom: none;
   margin-bottom: .5rem;
@@ -19,15 +23,4 @@
       border-bottom-color: #007bff;
     }
   }
-}
-
-.project-measure:not(:first-child)::after {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 0;
-  height: 30px;
-  margin-top: -18px;
-  border-right: 1px solid #e6e6e6;
-  content: "";
 }

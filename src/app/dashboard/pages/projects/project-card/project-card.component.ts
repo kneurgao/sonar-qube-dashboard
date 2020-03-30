@@ -1,62 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { ProjectComponent } from '../../../services/tpl-sonar-qube/models/project-component.model';
-import { TplSonarQubeService } from '../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
-import { TplSonarQubeHelper } from '../../../services/tpl-sonar-qube/tpl-sonar-qube.helper';
-import { ProjectMeasures } from '../../../services/tpl-sonar-qube/models/project-measures.model';
-import { ProjectTrend } from '../../../services/tpl-sonar-qube/models/project-trend.model';
 
 @Component({
   selector: 'tpl-project-card',
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.scss']
 })
-export class ProjectCardComponent implements OnInit {
+export class ProjectCardComponent {
 
   @Input() projectComponent: ProjectComponent;
-  projectMeasures: ProjectMeasures;
-  projectTrend: ProjectTrend;
+  passed: boolean;
 
-  constructor(private tplSonarQubeService: TplSonarQubeService,
-              private tplSonarQubeHelper: TplSonarQubeHelper) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.fetchProjectMeasures();
-    this.fetchProjectMeasuresHistory();
+  setStatus(passed: boolean) {
+    this.passed = passed;
   }
 
-  fetchProjectMeasures() {
-    const metricKeys = [
-      'complexity',
-      'alert_status',
-      'bugs',
-      'reliability_rating',
-      'vulnerabilities',
-      'security_rating',
-      'code_smells',
-      'duplicated_lines_density',
-      'sqale_rating'
-    ];
-    const additionalFields = [
-      'metrics'
-    ];
-    this.tplSonarQubeService.getComponentMeasures(this.projectComponent.key, metricKeys, additionalFields)
-    .subscribe((componentMeasures: any) => {
-      this.projectMeasures = this.tplSonarQubeHelper.parseComponentMeasures(componentMeasures);
-    });
-  }
-
-  fetchProjectMeasuresHistory() {
-    const metricKeys = [
-      'complexity',
-      'bugs',
-      'vulnerabilities',
-      'code_smells',
-      'duplicated_lines_density'
-    ];
-    this.tplSonarQubeService.getComponentMeasuresHistory(this.projectComponent.key, metricKeys)
-    .subscribe((componentMeasuresHistory: any) => {
-      this.projectTrend = this.tplSonarQubeHelper.parseComponentMeasuresHistory(componentMeasuresHistory);
-    });
-  }
 }

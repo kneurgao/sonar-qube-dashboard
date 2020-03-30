@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
-import { ProjectComponent } from '../../../services/tpl-sonar-qube/models/project-component.model';
-import { TplSonarQubeService } from '../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
-import { TplSonarQubeHelper } from 'src/app/dashboard/services/tpl-sonar-qube/tpl-sonar-qube.helper';
-import { ProjectMeasures } from '../../../services/tpl-sonar-qube/models/project-measures.model';
+import { ProjectMeasures } from '../../../../services/tpl-sonar-qube/models/project-measures.model';
+import { TplSonarQubeService } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
+import { TplSonarQubeHelper } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.helper';
 
 @Component({
   selector: 'tpl-project-measures',
@@ -12,7 +11,8 @@ import { ProjectMeasures } from '../../../services/tpl-sonar-qube/models/project
 })
 export class ProjectMeasuresComponent implements OnInit {
 
-  @Input() projectComponent: ProjectComponent;
+  @Input() projectKey: string;
+  @Output() statusChanged = new EventEmitter<boolean>();
   projectMeasures: ProjectMeasures;
 
   constructor(private tplSonarQubeService: TplSonarQubeService,
@@ -24,22 +24,22 @@ export class ProjectMeasuresComponent implements OnInit {
 
   fetchProjectMeasures() {
     const metricKeys = [
-      'complexity',
       'alert_status',
       'bugs',
       'reliability_rating',
       'vulnerabilities',
       'security_rating',
       'code_smells',
-      'duplicated_lines_density',
-      'sqale_rating'
+      'sqale_rating',
+      'duplicated_lines_density'
     ];
     const additionalFields = [
       'metrics'
     ];
-    this.tplSonarQubeService.getComponentMeasures(this.projectComponent.key, metricKeys, additionalFields)
+    this.tplSonarQubeService.getComponentMeasures(this.projectKey, metricKeys, additionalFields)
     .subscribe((componentMeasures: any) => {
       this.projectMeasures = this.tplSonarQubeHelper.parseComponentMeasures(componentMeasures);
+      this.statusChanged.emit(this.projectMeasures.passed);
     });
   }
 
