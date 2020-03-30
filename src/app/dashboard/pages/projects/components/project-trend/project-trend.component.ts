@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 
-import { ProjectTrend } from '../../../../services/tpl-sonar-qube/models/project-trend.model';
+import { TplSonarQubeService } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
+import { TplSonarQubeHelper } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.helper';
 
 @Component({
   selector: 'tpl-project-trend',
@@ -10,32 +11,49 @@ import { ProjectTrend } from '../../../../services/tpl-sonar-qube/models/project
 })
 export class ProjectTrendComponent implements OnInit {
 
-  @Input() projectTrend: ProjectTrend;
+  @Input() projectKey: string;
 
   chart = new Chart({
     chart: {
       type: 'line'
     },
     title: {
-      text: 'Trend'
+      text: ''
     },
     credits: {
       enabled: false
     }
   });
 
-  constructor() { }
+  constructor(private tplSonarQubeService: TplSonarQubeService,
+              private tplSonarQubeHelper: TplSonarQubeHelper) { }
 
   ngOnInit(): void {
-    this.chart.ref$.subscribe(ref => {
-      ref.xAxis[0].setCategories(this.projectTrend.dates);
-    });
-    this.projectTrend.trends.forEach(trend => {
-      this.chart.addSeries({
-        name: trend.name,
-        data: trend.values,
-        type: 'line'
-      }, true, true);
+    this.fetchProjectMeasuresHistory();
+  }
+
+  fetchProjectMeasuresHistory() {
+    const metricKeys = [
+      'bugs',
+      'vulnerabilities',
+      'code_smells',
+      'duplicated_lines_density'
+    ];
+    this.tplSonarQubeService.getComponentMeasuresHistory(this.projectKey, metricKeys)
+    .subscribe((componentMeasuresHistory: any) => {
+      const projectTrend = this.tplSonarQubeHelper.parseComponentMeasuresHistory(componentMeasuresHistory);
+
+      this.chart.ref$.subscribe(ref => {
+        ref.xAxis[0].setCategories(projectTrend.dates);
+      });
+
+      projectTrend.trends.forEach(trend => {
+        this.chart.addSeries({
+          name: trend.name,
+          data: trend.values,
+          type: 'line'
+        }, true, true);
+      });
     });
   }
 

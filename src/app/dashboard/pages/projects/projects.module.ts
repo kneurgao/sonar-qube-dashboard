@@ -8,12 +8,14 @@ import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectTrendComponent } from './components/project-trend/project-trend.component';
+import { ProjectMeasuresComponent } from './components/project-measures/project-measures.component';
 
 @NgModule({
   declarations: [
     ProjectsComponent,
     ProjectCardComponent,
-    ProjectTrendComponent
+    ProjectTrendComponent,
+    ProjectMeasuresComponent
   ],
   imports: [
     CommonModule,

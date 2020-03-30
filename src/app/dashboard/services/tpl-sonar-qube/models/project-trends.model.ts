@@ -1,6 +1,6 @@
 import { Trend } from './trend.model';
 
-export class ProjectTrend {
+export class ProjectTrends {
   dates: string[];
   trends: Trend[];
 

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { faBug, faUnlock, faRadiationAlt, faClone, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faUnlockAlt, faRadiationAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faClone } from '@fortawesome/free-regular-svg-icons';
 
 import { DashboardModule } from '../../dashboard.module';
 import { SharedService } from '../shared/shared.service';
 import { ProjectMeasures } from './models/project-measures.model';
 import { Measure } from './models/measure.model';
-import { ProjectTrend } from './models/project-trend.model';
+import { ProjectTrends } from './models/project-trends.model';
 import { Trend } from './models/trend.model';
 
 @Injectable({
@@ -27,7 +28,7 @@ export class TplSonarQubeHelper {
       this.parseProjectMeasure(componentMeasures, 'bugs', 'reliability_rating', faBug)
     );
     projectMeasures.measures.push(
-      this.parseProjectMeasure(componentMeasures, 'vulnerabilities', 'security_rating', faUnlock)
+      this.parseProjectMeasure(componentMeasures, 'vulnerabilities', 'security_rating', faUnlockAlt)
     );
     projectMeasures.measures.push(
       this.parseProjectMeasure(componentMeasures, 'code_smells', 'sqale_rating', faRadiationAlt)
@@ -89,7 +90,7 @@ export class TplSonarQubeHelper {
   }
 
   parseComponentMeasuresHistory(componentMeasuresHistory: any) {
-    const projectTrend = new ProjectTrend();
+    const projectTrend = new ProjectTrends();
 
     projectTrend.dates = componentMeasuresHistory.measures[0].history.map(historyItem => {
       return this.datePipe.transform(historyItem.date, 'dd-MMM-yy');
@@ -99,7 +100,7 @@ export class TplSonarQubeHelper {
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'bugs', faBug)
     );
     projectTrend.trends.push(
-      this.parseProjectMeasureHistory(componentMeasuresHistory, 'vulnerabilities', faUnlock)
+      this.parseProjectMeasureHistory(componentMeasuresHistory, 'vulnerabilities', faUnlockAlt)
     );
     projectTrend.trends.push(
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'code_smells', faRadiationAlt)
@@ -117,8 +118,7 @@ export class TplSonarQubeHelper {
     icon: IconDefinition) {
     const trend = new Trend();
 
-    trend.name = metricKey === 'vulnerabilities'
-        ? 'Vulnerabilities' : this.sharedService.getMetric(metricKey);
+    trend.name = this.sharedService.getMetric(metricKey);
 
     const measure = this.getMeasure(componentMeasuresHistory, metricKey);
     trend.values = measure.history.map(historyItem => {

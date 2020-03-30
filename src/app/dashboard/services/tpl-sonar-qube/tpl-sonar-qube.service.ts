@@ -31,6 +31,9 @@ export class TplSonarQubeService {
   }
 
   searchMetrics() {
+    this.API_OPTIONS.params = {
+      ps: 500
+    };
     return this.http.get(this.URL_PREFIX + '/metrics/search', this.API_OPTIONS);
   }
 
