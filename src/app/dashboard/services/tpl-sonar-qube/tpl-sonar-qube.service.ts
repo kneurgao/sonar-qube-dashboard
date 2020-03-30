@@ -43,4 +43,12 @@ export class TplSonarQubeService {
     return this.http.get(this.URL_PREFIX + '/measures/component', this.API_OPTIONS);
   }
 
+  getComponentMeasuresHistory(component: string, metricKeys: string[]) {
+    this.API_OPTIONS.params = {
+      component,
+      metrics: metricKeys.join(',')
+    };
+    return this.http.get(this.URL_PREFIX + '/measures/search_history', this.API_OPTIONS);
+  }
+
 }

@@ -4,22 +4,25 @@ import { ProjectComponent } from '../../../services/tpl-sonar-qube/models/projec
 import { TplSonarQubeService } from '../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
 import { TplSonarQubeHelper } from 'src/app/dashboard/services/tpl-sonar-qube/tpl-sonar-qube.helper';
 import { ProjectMeasures } from '../../../services/tpl-sonar-qube/models/project-measures.model';
+import { ProjectTrend } from 'src/app/dashboard/services/tpl-sonar-qube/models/project-trend.model';
 
 @Component({
-  selector: 'tpl-project-measures',
-  templateUrl: './project-measures.component.html',
-  styleUrls: ['./project-measures.component.scss']
+  selector: 'tpl-project-card',
+  templateUrl: './project-card.component.html',
+  styleUrls: ['./project-card.component.scss']
 })
-export class ProjectMeasuresComponent implements OnInit {
+export class ProjectCardComponent implements OnInit {
 
   @Input() projectComponent: ProjectComponent;
   projectMeasures: ProjectMeasures;
+  projectTrends: ProjectTrend[];
 
   constructor(private tplSonarQubeService: TplSonarQubeService,
               private tplSonarQubeHelper: TplSonarQubeHelper) { }
 
   ngOnInit(): void {
     this.fetchProjectMeasures();
+    this.fetchProjectMeasuresHistory();
   }
 
   fetchProjectMeasures() {
@@ -43,4 +46,17 @@ export class ProjectMeasuresComponent implements OnInit {
     });
   }
 
+  fetchProjectMeasuresHistory() {
+    const metricKeys = [
+      'complexity',
+      'bugs',
+      'vulnerabilities',
+      'code_smells',
+      'duplicated_lines_density'
+    ];
+    this.tplSonarQubeService.getComponentMeasuresHistory(this.projectComponent.key, metricKeys)
+    .subscribe((componentMeasuresHistory: any) => {
+      this.projectTrends = this.tplSonarQubeHelper.parseComponentMeasuresHistory(componentMeasuresHistory);
+    });
+  }
 }

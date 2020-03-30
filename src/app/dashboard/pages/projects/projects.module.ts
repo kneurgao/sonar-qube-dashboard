@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
-import { ProjectMeasuresComponent } from './project-measures/project-measures.component';
+import { ProjectCardComponent } from './project-card/project-card.component';
 
 @NgModule({
   declarations: [
     ProjectsComponent,
-    ProjectMeasuresComponent
+    ProjectCardComponent
   ],
   imports: [
     CommonModule,
     FontAwesomeModule,
-    ProjectsRoutingModule
+    ProjectsRoutingModule,
+    NgbNavModule
   ]
 })
 export class ProjectsModule { }

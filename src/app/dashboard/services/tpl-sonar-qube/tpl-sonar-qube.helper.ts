@@ -2,20 +2,22 @@ import { Injectable } from '@angular/core';
 import { faBug, faUnlock, faRadiationAlt, faClone, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import { DashboardModule } from '../../dashboard.module';
+import { SharedService } from '../shared/shared.service';
 import { ProjectMeasures } from './models/project-measures.model';
 import { Measure } from './models/measure.model';
+import { ProjectTrend } from './models/project-trend.model';
 
 @Injectable({
   providedIn: DashboardModule
 })
 export class TplSonarQubeHelper {
 
-  constructor() { }
+  constructor(private sharedService: SharedService) { }
 
   parseComponentMeasures(componentMeasures: any) {
     const projectMeasures = new ProjectMeasures();
 
-    const alertStatusMeasure = this.getMeasure(componentMeasures, 'alert_status');
+    const alertStatusMeasure = this.getMeasure(componentMeasures.component, 'alert_status');
     projectMeasures.passed = alertStatusMeasure.value === 'OK';
 
     projectMeasures.measures.push(
@@ -39,18 +41,18 @@ export class TplSonarQubeHelper {
     measureKey: string,
     ratingMeasureKey: string,
     icon: IconDefinition) {
-    const measure = this.getMeasure(componentMeasures, measureKey);
+    const measure = this.getMeasure(componentMeasures.component, measureKey);
     const metric = this.getMetric(componentMeasures, measureKey);
 
-    const ratingMeasure = this.getMeasure(componentMeasures, ratingMeasureKey);
+    const ratingMeasure = this.getMeasure(componentMeasures.component, ratingMeasureKey);
     const rating = ratingMeasureKey === 'duplicated_lines_density' ?
       this.getDuplicationsRating(ratingMeasure.value) : this.getRating(ratingMeasure.value);
 
     return new Measure(metric.name, measure.value, rating, icon);
   }
 
-  getMeasure(componentMeasures: any, key: string) {
-    return componentMeasures.component.measures.find(measure => measure.metric === key);
+  getMeasure(component: any, key: string) {
+    return component.measures.find(measure => measure.metric === key);
   }
 
   getMetric(componentMeasures: any, key: string) {
@@ -81,6 +83,37 @@ export class TplSonarQubeHelper {
       return 'b';
     }
     return 'a';
+  }
+
+  parseComponentMeasuresHistory(componentMeasuresHistory: any) {
+    const projectTrends = [];
+
+    projectTrends.push(
+      this.parseProjectMeasureHistory(componentMeasuresHistory, 'bugs', faBug)
+    );
+    projectTrends.push(
+      this.parseProjectMeasureHistory(componentMeasuresHistory, 'vulnerabilities', faUnlock)
+    );
+    projectTrends.push(
+      this.parseProjectMeasureHistory(componentMeasuresHistory, 'code_smells', faRadiationAlt)
+    );
+    projectTrends.push(
+      this.parseProjectMeasureHistory(componentMeasuresHistory, 'duplicated_lines_density', faClone)
+    );
+
+    return projectTrends;
+  }
+
+  private parseProjectMeasureHistory(
+    componentMeasuresHistory: any,
+    metricKey: string,
+    icon: IconDefinition) {
+    const projectTrend = new ProjectTrend();
+
+    projectTrend.metric = this.sharedService.getMetric(metricKey);
+    projectTrend.values = this.getMeasure(componentMeasuresHistory, metricKey).history;
+
+    return projectTrend;
   }
 
 }
