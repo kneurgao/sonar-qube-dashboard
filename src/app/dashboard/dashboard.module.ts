@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -16,6 +16,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
   ],
   exports: [
     ToolbarComponent
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class DashboardModule { }

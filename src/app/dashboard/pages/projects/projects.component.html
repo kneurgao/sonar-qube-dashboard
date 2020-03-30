@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="projectSearchResult">
   <div class="row pr-3 pb-3">
     <div class="col-12 col-lg-6 px-0" *ngFor="let projectComponent of projectSearchResult.components">
-      <tpl-project-measures [projectComponent]="projectComponent"></tpl-project-measures>
+      <tpl-project-card [projectComponent]="projectComponent"></tpl-project-card>
     </div>
   </div>
 </div>

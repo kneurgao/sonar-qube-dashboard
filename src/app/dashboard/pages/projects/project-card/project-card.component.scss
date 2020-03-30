@@ -1,0 +1,33 @@
+@import '../../../../../assets/styles/common.scss';
+
+.nav-tabs {
+  border-bottom: none;
+  margin-bottom: .5rem;
+
+  .nav-link {
+    padding: .2rem 0;
+    margin-right: .75rem;
+    border: #fff 2px solid;
+    font-size: 0.8rem;
+    color: #495057;
+
+    &:hover {
+      border-bottom-color: #007bff;
+    }
+    &.active {
+      color: #007bff;
+      border-bottom-color: #007bff;
+    }
+  }
+}
+
+.project-measure:not(:first-child)::after {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 30px;
+  margin-top: -18px;
+  border-right: 1px solid #e6e6e6;
+  content: "";
+}

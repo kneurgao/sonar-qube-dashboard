@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { DashboardModule } from '../../dashboard.module';
-import { ProjectSearchResult } from './models/project-search-result.model';
-import { ProjectMeasures } from './models/project-measures.model';
+import { SharedService } from '../shared/shared.service';
 
 @Injectable({
   providedIn: DashboardModule
@@ -20,10 +19,19 @@ export class TplSonarQubeService {
     withCredentials: true
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private sharedService: SharedService) {
+    this.searchMetrics().subscribe((data: any) => {
+      this.sharedService.saveMetrics(data.metrics);
+    });
+  }
 
   searchProjects() {
-    return this.http.get<ProjectSearchResult>(this.URL_PREFIX + '/projects/search', this.API_OPTIONS);
+    return this.http.get(this.URL_PREFIX + '/projects/search', this.API_OPTIONS);
+  }
+
+  searchMetrics() {
+    return this.http.get(this.URL_PREFIX + '/metrics/search', this.API_OPTIONS);
   }
 
   getComponentMeasures(component: string, metricKeys: string[], additionalFields: string[]) {
@@ -32,6 +40,15 @@ export class TplSonarQubeService {
       metricKeys: metricKeys.join(','),
       additionalFields: additionalFields.join(',')
     };
-    return this.http.get<ProjectMeasures>(this.URL_PREFIX + '/measures/component', this.API_OPTIONS);
+    return this.http.get(this.URL_PREFIX + '/measures/component', this.API_OPTIONS);
   }
+
+  getComponentMeasuresHistory(component: string, metricKeys: string[]) {
+    this.API_OPTIONS.params = {
+      component,
+      metrics: metricKeys.join(',')
+    };
+    return this.http.get(this.URL_PREFIX + '/measures/search_history', this.API_OPTIONS);
+  }
+
 }
