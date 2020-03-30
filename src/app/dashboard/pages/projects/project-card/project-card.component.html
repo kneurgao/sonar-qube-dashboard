@@ -1,11 +1,11 @@
 <div class="card ml-3 mt-3 shadow-sm">
   <div class="card-body">
     <div class="row">
-      <h6 class="card-title col-10 col-sm-8 col-lg-10 text-truncate">
+      <h6 class="card-title col-10 col-sm-8 col-lg-10 mb-2 text-truncate">
         <span>{{ projectComponent.name }}</span>
       </h6>
       <div class="col-2 col-sm-4 col-lg-2 pl-0">
-        <span class="badge badge-pill float-right status" [ngClass]="'rating-' + (passed ? 'a' : 'e')">
+        <span class="badge badge-pill float-right text-white" [ngClass]="'rating-' + (passed ? 'a' : 'e')">
           <span>{{ passed ? 'Passed' : 'Failed' }}</span>
         </span>
       </div>

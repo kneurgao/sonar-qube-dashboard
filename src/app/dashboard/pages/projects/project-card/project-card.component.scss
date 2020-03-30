@@ -1,18 +1,14 @@
 @import '../../../../../assets/styles/common.scss';
 
-.status {
-  color: #fff;
-}
-
 .nav-tabs {
   border-bottom: none;
   margin-bottom: .5rem;
 
   .nav-link {
-    padding: .2rem 0;
-    margin-right: .75rem;
-    border: #fff 2px solid;
-    font-size: 0.8rem;
+    padding: .25rem 0;
+    margin-right: 1rem;
+    border: #fff .1rem solid;
+    font-size: 0.75rem;
     color: #495057;
 
     &:hover {

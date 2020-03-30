@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { faBug, faUnlock, faRadiationAlt, faClone, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faBug, faUnlockAlt, faRadiationAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faClone } from '@fortawesome/free-regular-svg-icons';
 
 import { DashboardModule } from '../../dashboard.module';
 import { SharedService } from '../shared/shared.service';
@@ -27,7 +28,7 @@ export class TplSonarQubeHelper {
       this.parseProjectMeasure(componentMeasures, 'bugs', 'reliability_rating', faBug)
     );
     projectMeasures.measures.push(
-      this.parseProjectMeasure(componentMeasures, 'vulnerabilities', 'security_rating', faUnlock)
+      this.parseProjectMeasure(componentMeasures, 'vulnerabilities', 'security_rating', faUnlockAlt)
     );
     projectMeasures.measures.push(
       this.parseProjectMeasure(componentMeasures, 'code_smells', 'sqale_rating', faRadiationAlt)
@@ -99,7 +100,7 @@ export class TplSonarQubeHelper {
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'bugs', faBug)
     );
     projectTrend.trends.push(
-      this.parseProjectMeasureHistory(componentMeasuresHistory, 'vulnerabilities', faUnlock)
+      this.parseProjectMeasureHistory(componentMeasuresHistory, 'vulnerabilities', faUnlockAlt)
     );
     projectTrend.trends.push(
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'code_smells', faRadiationAlt)
