@@ -1,13 +1,10 @@
-import { Measure } from './measure.model';
+import { Trend } from './trend.model';
 
 export class ProjectTrend {
-  metric: string;
-  values: {
-    date: Date;
-    value: number;
-  }[];
+  dates: string[];
+  trends: Trend[];
 
   constructor() {
-    this.values = [];
+    this.trends = [];
   }
 }

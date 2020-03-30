@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { faBug, faUnlock, faRadiationAlt, faClone, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 import { DashboardModule } from '../../dashboard.module';
@@ -6,13 +7,15 @@ import { SharedService } from '../shared/shared.service';
 import { ProjectMeasures } from './models/project-measures.model';
 import { Measure } from './models/measure.model';
 import { ProjectTrend } from './models/project-trend.model';
+import { Trend } from './models/trend.model';
 
 @Injectable({
   providedIn: DashboardModule
 })
 export class TplSonarQubeHelper {
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService,
+              private datePipe: DatePipe) { }
 
   parseComponentMeasures(componentMeasures: any) {
     const projectMeasures = new ProjectMeasures();
@@ -86,34 +89,43 @@ export class TplSonarQubeHelper {
   }
 
   parseComponentMeasuresHistory(componentMeasuresHistory: any) {
-    const projectTrends = [];
+    const projectTrend = new ProjectTrend();
 
-    projectTrends.push(
+    projectTrend.dates = componentMeasuresHistory.measures[0].history.map(historyItem => {
+      return this.datePipe.transform(historyItem.date, 'dd-MMM-yy');
+    });
+
+    projectTrend.trends.push(
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'bugs', faBug)
     );
-    projectTrends.push(
+    projectTrend.trends.push(
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'vulnerabilities', faUnlock)
     );
-    projectTrends.push(
+    projectTrend.trends.push(
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'code_smells', faRadiationAlt)
     );
-    projectTrends.push(
+    projectTrend.trends.push(
       this.parseProjectMeasureHistory(componentMeasuresHistory, 'duplicated_lines_density', faClone)
     );
 
-    return projectTrends;
+    return projectTrend;
   }
 
   private parseProjectMeasureHistory(
     componentMeasuresHistory: any,
     metricKey: string,
     icon: IconDefinition) {
-    const projectTrend = new ProjectTrend();
+    const trend = new Trend();
 
-    projectTrend.metric = this.sharedService.getMetric(metricKey);
-    projectTrend.values = this.getMeasure(componentMeasuresHistory, metricKey).history;
+    trend.name = metricKey === 'vulnerabilities'
+        ? 'Vulnerabilities' : this.sharedService.getMetric(metricKey);
 
-    return projectTrend;
+    const measure = this.getMeasure(componentMeasuresHistory, metricKey);
+    trend.values = measure.history.map(historyItem => {
+      return parseInt(historyItem.value, 10);
+    });
+
+    return trend;
   }
 
 }

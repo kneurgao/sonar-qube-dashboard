@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { ProjectComponent } from '../../../services/tpl-sonar-qube/models/project-component.model';
 import { TplSonarQubeService } from '../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
-import { TplSonarQubeHelper } from 'src/app/dashboard/services/tpl-sonar-qube/tpl-sonar-qube.helper';
+import { TplSonarQubeHelper } from '../../../services/tpl-sonar-qube/tpl-sonar-qube.helper';
 import { ProjectMeasures } from '../../../services/tpl-sonar-qube/models/project-measures.model';
-import { ProjectTrend } from 'src/app/dashboard/services/tpl-sonar-qube/models/project-trend.model';
+import { ProjectTrend } from '../../../services/tpl-sonar-qube/models/project-trend.model';
 
 @Component({
   selector: 'tpl-project-card',
@@ -15,7 +15,7 @@ export class ProjectCardComponent implements OnInit {
 
   @Input() projectComponent: ProjectComponent;
   projectMeasures: ProjectMeasures;
-  projectTrends: ProjectTrend[];
+  projectTrend: ProjectTrend;
 
   constructor(private tplSonarQubeService: TplSonarQubeService,
               private tplSonarQubeHelper: TplSonarQubeHelper) { }
@@ -56,7 +56,7 @@ export class ProjectCardComponent implements OnInit {
     ];
     this.tplSonarQubeService.getComponentMeasuresHistory(this.projectComponent.key, metricKeys)
     .subscribe((componentMeasuresHistory: any) => {
-      this.projectTrends = this.tplSonarQubeHelper.parseComponentMeasuresHistory(componentMeasuresHistory);
+      this.projectTrend = this.tplSonarQubeHelper.parseComponentMeasuresHistory(componentMeasuresHistory);
     });
   }
 }

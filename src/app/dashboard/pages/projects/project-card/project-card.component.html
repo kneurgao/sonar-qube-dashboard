@@ -37,7 +37,7 @@
       <li ngbNavItem>
         <a ngbNavLink>Trend</a>
         <ng-template ngbNavContent>
-          {{ projectTrends | json }}
+          <tpl-project-trend [projectTrend]="projectTrend"></tpl-project-trend>
         </ng-template>
       </li>
     </ul>
