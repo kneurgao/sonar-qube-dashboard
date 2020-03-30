@@ -11,16 +11,14 @@
       </div>
     </div>
 
-    <ul ngbNav #nav="ngbNav" class="nav-tabs">
-      <li ngbNavItem>
-        <a ngbNavLink>Measures</a>
+    <ul ngbNav #nav="ngbNav" [activeId]="activeFragment" class="nav-tabs">
+      <li [ngbNavItem]="'measures'">
         <ng-template ngbNavContent>
           <tpl-project-measures [projectKey]="projectComponent.key"
                                 (statusChanged)="setStatus($event)"></tpl-project-measures>
         </ng-template>
       </li>
-      <li ngbNavItem>
-        <a ngbNavLink>Trend</a>
+      <li [ngbNavItem]="'trend'">
         <ng-template ngbNavContent>
           <tpl-project-trend [projectKey]="projectComponent.key"></tpl-project-trend>
         </ng-template>

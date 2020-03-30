@@ -18,7 +18,7 @@ export class ProjectTrendComponent implements OnInit {
       type: 'line'
     },
     title: {
-      text: 'Trend'
+      text: ''
     },
     credits: {
       enabled: false

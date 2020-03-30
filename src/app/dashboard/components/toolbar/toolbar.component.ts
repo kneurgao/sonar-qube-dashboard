@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'tpl-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent {
 
-  constructor() { }
+  links = [
+    { title: 'Measures', fragment: 'measures' },
+    { title: 'Trend', fragment: 'trend' }
+  ];
 
-  ngOnInit(): void {
-  }
+  constructor(public activatedRoute: ActivatedRoute) { }
 
 }
