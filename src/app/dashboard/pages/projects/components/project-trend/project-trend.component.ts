@@ -12,6 +12,7 @@ import { TplSonarQubeHelper } from '../../../../services/tpl-sonar-qube/tpl-sona
 export class ProjectTrendComponent implements OnInit {
 
   @Input() projectKey: string;
+  loaded = false;
 
   chart = new Chart({
     chart: {
@@ -20,24 +21,31 @@ export class ProjectTrendComponent implements OnInit {
     title: {
       text: ''
     },
+    xAxis: {
+      title: {
+        text: '',
+        reserveSpace: false
+      }
+    },
     yAxis: [
       {
         title: {
-          text: 'Violations',
+          text: 'Violations'
         }
       },
       {
         labels: {
-          format: '{value} %',
+          format: '{value} %'
         },
         title: {
-          text: 'Duplications',
+          text: 'Duplications'
         },
         opposite: true
       }
     ],
     tooltip: {
-      shared: true
+      shared: true,
+      borderColor: 'rgb(254, 254, 254)'
     },
     credits: {
       enabled: false
@@ -82,6 +90,8 @@ export class ProjectTrendComponent implements OnInit {
 
         this.chart.addSeries(series, true, true);
       });
+
+      this.loaded = true;
     });
   }
 

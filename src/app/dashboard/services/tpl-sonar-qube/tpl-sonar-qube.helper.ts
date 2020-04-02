@@ -9,6 +9,8 @@ import { ProjectMeasures } from './models/project-measures.model';
 import { Measure } from './models/measure.model';
 import { ProjectTrends } from './models/project-trends.model';
 import { Trend } from './models/trend.model';
+import { IssueAssignees } from './models/issue-assignees.model';
+import { Utils } from '../../../commons/utils';
 
 @Injectable({
   providedIn: DashboardModule
@@ -126,6 +128,25 @@ export class TplSonarQubeHelper {
     });
 
     return trend;
+  }
+
+  parseIssueAssignees(issueSearchResults: any) {
+    const issueAssignees = new IssueAssignees();
+
+    const allAssigneesFacet = issueSearchResults[0].facets.find(facet => facet.property === 'assignees');
+    const assigneesFacet = issueSearchResults[1].facets.find(facet => facet.property === 'assignees');
+
+    allAssigneesFacet.values.forEach(value1 => {
+      if (value1.val) {
+        issueAssignees.assignees.push(value1.val ? Utils.getNameFromEmail(value1.val) : 'Unassigned');
+        issueAssignees.allIssues.push(value1.count);
+
+        const fixedIssue = assigneesFacet.values.find(value2 => value2.val === value1.val);
+        issueAssignees.fixedIssues.push(fixedIssue ? fixedIssue.count : 0);
+      }
+    });
+
+    return issueAssignees;
   }
 
 }

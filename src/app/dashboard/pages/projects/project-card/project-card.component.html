@@ -23,13 +23,16 @@
           <tpl-project-trend [projectKey]="projectComponent.key"></tpl-project-trend>
         </ng-template>
       </li>
+      <li [ngbNavItem]="'assignees'">
+        <ng-template ngbNavContent>
+          <tpl-issue-assignees [projectKey]="projectComponent.key"></tpl-issue-assignees>
+        </ng-template>
+      </li>
     </ul>
     <div [ngbNavOutlet]="nav"></div>
 
-
-
-    <p class="card-subtitle mt-2 text-truncate text-muted">
-      <small>Last Analysis on {{ projectComponent.lastAnalysisDate | date: 'medium' }}</small>
+    <p class="card-subtitle mt-1 text-truncate text-muted text-right small font-italic">
+      Last Analysis on {{ projectComponent.lastAnalysisDate | date: 'medium' }}
     </p>
   </div>
 </div>
