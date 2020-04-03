@@ -15,10 +15,29 @@ export class ProjectTrendComponent implements OnInit {
 
   chart = new Chart({
     chart: {
-      type: 'line'
+      zoomType: 'xy'
     },
     title: {
       text: ''
+    },
+    yAxis: [
+      {
+        title: {
+          text: 'Violations',
+        }
+      },
+      {
+        labels: {
+          format: '{value} %',
+        },
+        title: {
+          text: 'Duplications',
+        },
+        opposite: true
+      }
+    ],
+    tooltip: {
+      shared: true
     },
     credits: {
       enabled: false
@@ -48,11 +67,20 @@ export class ProjectTrendComponent implements OnInit {
       });
 
       projectTrend.trends.forEach(trend => {
-        this.chart.addSeries({
+        const series: Highcharts.SeriesOptionsType = {
           name: trend.name,
           data: trend.values,
-          type: 'line'
-        }, true, true);
+          type: 'spline',
+        };
+
+        if (trend.name.indexOf('Duplicated') !== -1) {
+          series.yAxis = 1;
+          series.tooltip = {
+            valueSuffix: ' %'
+          };
+        }
+
+        this.chart.addSeries(series, true, true);
       });
     });
   }

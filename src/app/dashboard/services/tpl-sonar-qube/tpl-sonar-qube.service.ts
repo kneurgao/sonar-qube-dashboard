@@ -3,14 +3,16 @@ import { HttpClient } from '@angular/common/http';
 
 import { DashboardModule } from '../../dashboard.module';
 import { SharedService } from '../shared/shared.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: DashboardModule
 })
 export class TplSonarQubeService {
 
-  private URL_PREFIX = 'http://114.143.20.82:9000/api';
-  private AUTH_TOKEN = 'MWExYmY5ODlhMjE3M2EyZDI2MTQxYzgxNzg2NDRmZmI4MWUwZTJjZjo=';
+  private URL_PREFIX = environment.URL_PREFIX;
+  private AUTH_TOKEN = environment.AUTH_TOKEN;
+
   private API_OPTIONS = {
     headers: {
       Authorization: 'Basic ' + this.AUTH_TOKEN
