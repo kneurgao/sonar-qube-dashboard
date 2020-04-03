@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://114.143.20.82:9000",
+    "target": "http://114.143.20.82:9090/sonarqube",
     "secure": false,
     "changeOrigin": true
   }
