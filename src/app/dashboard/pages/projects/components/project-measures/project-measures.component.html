@@ -1,17 +1,28 @@
-<div class="row" *ngIf="projectMeasures">
-  <div *ngFor="let projectMetricMeasure of projectMeasures.measures"
-        class="col-6 col-sm-3 my-2 project-measure text-center">
-    <h6 class="font-weight-normal mb-0">
-      {{ projectMetricMeasure.value }}
-      <span class="rating" [ngClass]="'rating-' + projectMetricMeasure.rating">
-        {{ projectMetricMeasure.rating | uppercase }}
-      </span>
-    </h6>
-    <div class="text-truncate">
-      <small>
-        <fa-icon [icon]="projectMetricMeasure.icon"></fa-icon>
-        {{ projectMetricMeasure.name }}
-      </small>
+<div class="measures-container">
+  <div class="row h-100" *ngIf="projectMeasures; else loading">
+    <div *ngFor="let projectMetricMeasure of projectMeasures.measures"
+          class="col-6 col-sm-3 my-2 project-measure text-center">
+      <h6 class="font-weight-normal mb-0">
+        {{ projectMetricMeasure.value }}
+        <span class="rating" [ngClass]="'rating-' + projectMetricMeasure.rating">
+          {{ projectMetricMeasure.rating | uppercase }}
+        </span>
+      </h6>
+      <div class="text-truncate">
+        <small>
+          <fa-icon [icon]="projectMetricMeasure.icon"></fa-icon>
+          {{ projectMetricMeasure.name }}
+        </small>
+      </div>
     </div>
   </div>
+  <ng-template #loading>
+    <div class="row h-100">
+      <div class="col-sm-12 my-auto text-center">
+        <div class="spinner-border spinner-border-sm text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>

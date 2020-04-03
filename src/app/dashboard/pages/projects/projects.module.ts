@@ -9,13 +9,15 @@ import { ProjectsComponent } from './projects.component';
 import { ProjectCardComponent } from './project-card/project-card.component';
 import { ProjectTrendComponent } from './components/project-trend/project-trend.component';
 import { ProjectMeasuresComponent } from './components/project-measures/project-measures.component';
+import { IssueAssigneesComponent } from './components/issue-assignees/issue-assignees.component';
 
 @NgModule({
   declarations: [
     ProjectsComponent,
     ProjectCardComponent,
     ProjectTrendComponent,
-    ProjectMeasuresComponent
+    ProjectMeasuresComponent,
+    IssueAssigneesComponent
   ],
   imports: [
     CommonModule,

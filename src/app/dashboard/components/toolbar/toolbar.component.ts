@@ -10,7 +10,8 @@ export class ToolbarComponent {
 
   links = [
     { title: 'Measures', fragment: 'measures' },
-    { title: 'Trend', fragment: 'trend' }
+    { title: 'Trend', fragment: 'trend' },
+    { title: 'Assignees', fragment: 'assignees' }
   ];
 
   constructor(public activatedRoute: ActivatedRoute) { }
