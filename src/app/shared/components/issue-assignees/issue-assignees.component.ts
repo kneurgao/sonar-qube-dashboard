@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { forkJoin } from 'rxjs';
 
-import { SonarQubeService } from '../../../../../services/sonar-qube/sonar-qube.service';
-import { SonarQubeHelper } from '../../../../../services/sonar-qube/sonar-qube.helper';
+import { SonarQubeService } from '../../../services/sonar-qube/sonar-qube.service';
+import { SonarQubeHelper } from '../../../services/sonar-qube/sonar-qube.helper';
 
 @Component({
   selector: 'tpl-issue-assignees',
