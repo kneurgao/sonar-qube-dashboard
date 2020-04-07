@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TplSonarQubeService } from './tpl-sonar-qube.service';
+import { SonarQubeService } from './sonar-qube.service';
 
-describe('TplSonarQubeService', () => {
-  let service: TplSonarQubeService;
+describe('SonarQubeService', () => {
+  let service: SonarQubeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TplSonarQubeService);
+    service = TestBed.inject(SonarQubeService);
   });
 
   it('should be created', () => {

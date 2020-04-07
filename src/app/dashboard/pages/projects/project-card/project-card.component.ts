@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ProjectComponent } from '../../../services/tpl-sonar-qube/models/project-component.model';
+import { ProjectComponent } from '../../../../services/sonar-qube/models/project-component.model';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

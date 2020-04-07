@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TplSonarQubeService } from '../../services/tpl-sonar-qube/tpl-sonar-qube.service';
-import { ProjectSearchResult } from '../../services/tpl-sonar-qube/models/project-search-result.model';
+import { SonarQubeService } from '../../../services/sonar-qube/sonar-qube.service';
+import { ProjectSearchResult } from '../../../services/sonar-qube/models/project-search-result.model';
 
 @Component({
   selector: 'tpl-projects',
@@ -11,14 +11,14 @@ import { ProjectSearchResult } from '../../services/tpl-sonar-qube/models/projec
 export class ProjectsComponent implements OnInit {
 
   projectSearchResult: ProjectSearchResult;
-  constructor(private tplSonarQubeService: TplSonarQubeService) { }
+  constructor(private sonarQubeService: SonarQubeService) { }
 
   ngOnInit(): void {
     this.fetchProjects();
   }
 
   fetchProjects() {
-    this.tplSonarQubeService.searchProjects()
+    this.sonarQubeService.searchProjects()
     .subscribe((projectSearchResult: ProjectSearchResult) => {
       this.projectSearchResult = projectSearchResult;
     });

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { DashboardModule } from '../../dashboard.module';
-import { SharedService } from '../shared/shared.service';
-import { environment } from '../../../../environments/environment';
+import { DashboardModule } from '../../dashboard/dashboard.module';
+import { SharedService } from '../../dashboard/services/shared/shared.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: DashboardModule
 })
-export class TplSonarQubeService {
+export class SonarQubeService {
 
   private URL_PREFIX = environment.URL_PREFIX;
   private AUTH_TOKEN = environment.AUTH_TOKEN;

@@ -3,19 +3,19 @@ import { DatePipe } from '@angular/common';
 import { faBug, faUnlockAlt, faRadiationAlt, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { faClone } from '@fortawesome/free-regular-svg-icons';
 
-import { DashboardModule } from '../../dashboard.module';
-import { SharedService } from '../shared/shared.service';
+import { DashboardModule } from '../../dashboard/dashboard.module';
+import { SharedService } from '../../dashboard/services/shared/shared.service';
 import { ProjectMeasures } from './models/project-measures.model';
 import { Measure } from './models/measure.model';
 import { ProjectTrends } from './models/project-trends.model';
 import { Trend } from './models/trend.model';
 import { IssueAssignees } from './models/issue-assignees.model';
-import { Utils } from '../../../commons/utils';
+import { Utils } from '../../commons/utils';
 
 @Injectable({
   providedIn: DashboardModule
 })
-export class TplSonarQubeHelper {
+export class SonarQubeHelper {
 
   constructor(private sharedService: SharedService,
               private datePipe: DatePipe) { }

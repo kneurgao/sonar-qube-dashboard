@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
-import { ProjectMeasures } from '../../../../services/tpl-sonar-qube/models/project-measures.model';
-import { TplSonarQubeService } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
-import { TplSonarQubeHelper } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.helper';
+import { ProjectMeasures } from '../../../../../services/sonar-qube/models/project-measures.model';
+import { SonarQubeService } from '../../../../../services/sonar-qube/sonar-qube.service';
+import { SonarQubeHelper } from '../../../../../services/sonar-qube/sonar-qube.helper';
 
 @Component({
   selector: 'tpl-project-measures',
@@ -15,8 +15,8 @@ export class ProjectMeasuresComponent implements OnInit {
   @Output() statusChanged = new EventEmitter<boolean>();
   projectMeasures: ProjectMeasures;
 
-  constructor(private tplSonarQubeService: TplSonarQubeService,
-              private tplSonarQubeHelper: TplSonarQubeHelper) { }
+  constructor(private sonarQubeService: SonarQubeService,
+              private sonarQubeHelper: SonarQubeHelper) { }
 
   ngOnInit(): void {
     this.fetchProjectMeasures();
@@ -36,9 +36,9 @@ export class ProjectMeasuresComponent implements OnInit {
     const additionalFields = [
       'metrics'
     ];
-    this.tplSonarQubeService.getComponentMeasures(this.projectKey, metricKeys, additionalFields)
+    this.sonarQubeService.getComponentMeasures(this.projectKey, metricKeys, additionalFields)
     .subscribe((componentMeasures: any) => {
-      this.projectMeasures = this.tplSonarQubeHelper.parseComponentMeasures(componentMeasures);
+      this.projectMeasures = this.sonarQubeHelper.parseComponentMeasures(componentMeasures);
       this.statusChanged.emit(this.projectMeasures.passed);
     });
   }
