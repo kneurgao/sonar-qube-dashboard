@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 
-import { TplSonarQubeService } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
-import { TplSonarQubeHelper } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.helper';
+import { SonarQubeService } from '../../../../../services/sonar-qube/sonar-qube.service';
+import { SonarQubeHelper } from '../../../../../services/sonar-qube/sonar-qube.helper';
 
 @Component({
   selector: 'tpl-project-trend',
@@ -52,8 +52,8 @@ export class ProjectTrendComponent implements OnInit {
     }
   });
 
-  constructor(private tplSonarQubeService: TplSonarQubeService,
-              private tplSonarQubeHelper: TplSonarQubeHelper) { }
+  constructor(private sonarQubeService: SonarQubeService,
+              private sonarQubeHelper: SonarQubeHelper) { }
 
   ngOnInit(): void {
     this.fetchProjectMeasuresHistory();
@@ -66,9 +66,9 @@ export class ProjectTrendComponent implements OnInit {
       'code_smells',
       'duplicated_lines_density'
     ];
-    this.tplSonarQubeService.getComponentMeasuresHistory(this.projectKey, metricKeys)
+    this.sonarQubeService.getComponentMeasuresHistory(this.projectKey, metricKeys)
     .subscribe((componentMeasuresHistory: any) => {
-      const projectTrend = this.tplSonarQubeHelper.parseComponentMeasuresHistory(componentMeasuresHistory);
+      const projectTrend = this.sonarQubeHelper.parseComponentMeasuresHistory(componentMeasuresHistory);
 
       this.chart.ref$.subscribe(ref => {
         ref.xAxis[0].setCategories(projectTrend.dates);

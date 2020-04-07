@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Chart } from 'angular-highcharts';
 import { forkJoin } from 'rxjs';
 
-import { TplSonarQubeService } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.service';
-import { TplSonarQubeHelper } from '../../../../services/tpl-sonar-qube/tpl-sonar-qube.helper';
+import { SonarQubeService } from '../../../services/sonar-qube/sonar-qube.service';
+import { SonarQubeHelper } from '../../../services/sonar-qube/sonar-qube.helper';
 
 @Component({
   selector: 'tpl-issue-assignees',
@@ -63,8 +63,8 @@ export class IssueAssigneesComponent implements OnInit {
   });
 
   constructor(
-    private tplSonarQubeService: TplSonarQubeService,
-    private tplSonarQubeHelper: TplSonarQubeHelper
+    private sonarQubeService: SonarQubeService,
+    private sonarQubeHelper: SonarQubeHelper
   ) {}
 
   ngOnInit(): void {
@@ -85,18 +85,18 @@ export class IssueAssigneesComponent implements OnInit {
     };
 
     forkJoin([
-      this.tplSonarQubeService.searchIssues(
+      this.sonarQubeService.searchIssues(
         componentKeys,
         facets,
         customAttributesAll
       ),
-      this.tplSonarQubeService.searchIssues(
+      this.sonarQubeService.searchIssues(
         componentKeys,
         facets,
         customAttributesFixed
       )
     ]).subscribe((issueSearchResults: any) => {
-      const issueAssignees = this.tplSonarQubeHelper.parseIssueAssignees(
+      const issueAssignees = this.sonarQubeHelper.parseIssueAssignees(
         issueSearchResults
       );
 

@@ -11,25 +11,21 @@
       </div>
     </div>
 
-    <ul ngbNav #nav="ngbNav" [activeId]="activeFragment" class="nav-tabs">
-      <li [ngbNavItem]="'measures'">
-        <ng-template ngbNavContent>
-          <tpl-project-measures [projectKey]="projectComponent.key"
-                                (statusChanged)="setStatus($event)"></tpl-project-measures>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="'trend'">
-        <ng-template ngbNavContent>
-          <tpl-project-trend [projectKey]="projectComponent.key"></tpl-project-trend>
-        </ng-template>
-      </li>
-      <li [ngbNavItem]="'assignees'">
-        <ng-template ngbNavContent>
-          <tpl-issue-assignees [projectKey]="projectComponent.key"></tpl-issue-assignees>
-        </ng-template>
-      </li>
-    </ul>
-    <div [ngbNavOutlet]="nav"></div>
+    <div [ngSwitch]="page">
+      <div *ngSwitchCase="'measures'">
+        <tpl-project-measures [projectKey]="projectComponent.key"
+                              (statusChanged)="setStatus($event)"></tpl-project-measures>
+      </div>
+      <div *ngSwitchCase="'trend'">
+        <tpl-project-trend [projectKey]="projectComponent.key"></tpl-project-trend>
+      </div>
+      <div *ngSwitchCase="'assignees'">
+        <tpl-issue-assignees [projectKey]="projectComponent.key"></tpl-issue-assignees>
+      </div>
+      <div *ngSwitchDefault class="text-center">
+        Detail not found
+      </div>
+    </div>
 
     <p class="card-subtitle mt-1 text-truncate text-muted text-right small font-italic">
       Last Analysis on {{ projectComponent.lastAnalysisDate | date: 'medium' }}

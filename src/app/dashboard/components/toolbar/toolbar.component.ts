@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tpl-toolbar',
@@ -8,12 +8,26 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ToolbarComponent {
 
-  links = [
-    { title: 'Measures', fragment: 'measures' },
-    { title: 'Trend', fragment: 'trend' },
-    { title: 'Assignees', fragment: 'assignees' }
+  routerUrl: string;
+
+  menuItems = [
+    {
+      title: 'Home',
+      path: '/dashboard'
+    },
+    {
+      title: 'Projects',
+      path: '/dashboard/projects',
+      children: [
+        { title: 'Measures', path: 'measures' },
+        { title: 'Trend', path: 'trend' },
+        { title: 'Assignees', path: 'assignees' }
+      ]
+    }
   ];
 
-  constructor(public activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router) {
+    this.routerUrl = this.router.url;
+  }
 
 }

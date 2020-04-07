@@ -10,12 +10,30 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul ngbNav [activeId]="activatedRoute.fragment | async" class="navbar-nav">
-      <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
-        <a ngbNavLink routerLink="." [fragment]="link.fragment">
-          {{ link.title }}
-        </a>
-      </li>
+    <ul ngbNav [activeId]="routerUrl" class="navbar-nav">
+      <ng-container *ngFor="let menuItem of menuItems">
+        <li ngbDropdown *ngIf="menuItem.children; else noChildren" class="nav-item">
+          <a href="javascript://" ngbDropdownToggle id="dropdownMenu" class="nav-link">
+            {{ menuItem.title }}
+          </a>
+          <ul ngbDropdownMenu aria-labelledby="dropdownMenu">
+            <li ngbDropdownItem [ngbNavItem]="menuItem.path + '/' + menuSubItem.path"
+                *ngFor="let menuSubItem of menuItem.children">
+              <a ngbNavLink [routerLink]="menuItem.path + '/' + menuSubItem.path">
+                {{ menuSubItem.title }}
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <ng-template #noChildren>
+          <li [ngbNavItem]="menuItem.path">
+            <a ngbNavLink [routerLink]="menuItem.path">
+              {{ menuItem.title }}
+            </a>
+          </li>
+        </ng-template>
+      </ng-container>
     </ul>
   </div>
 </nav>
