@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartModule } from 'angular-highcharts';
 
 import { ProjectsRoutingModule } from './projects-routing.module';
@@ -22,7 +21,6 @@ import { IssueAssigneesComponent } from './components/issue-assignees/issue-assi
   imports: [
     CommonModule,
     FontAwesomeModule,
-    NgbNavModule,
     ChartModule,
     ProjectsRoutingModule
   ]

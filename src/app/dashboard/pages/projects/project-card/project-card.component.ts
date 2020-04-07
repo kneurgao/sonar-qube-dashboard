@@ -11,12 +11,14 @@ import { ActivatedRoute } from '@angular/router';
 export class ProjectCardComponent {
 
   @Input() projectComponent: ProjectComponent;
-  activeFragment: string;
+  page: string;
   passed: boolean;
 
   constructor(public activatedRoute: ActivatedRoute) {
-    this.activatedRoute.fragment.subscribe((fragment: string) => {
-      this.activeFragment = fragment;
+    this.activatedRoute.params.subscribe(params => {
+      if (params.page) {
+        this.page = params.page;
+      }
     });
   }
 

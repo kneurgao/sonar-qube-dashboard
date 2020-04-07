@@ -9,10 +9,13 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       {
+        path: '',
+        loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+      },
+      {
         path: 'projects',
         loadChildren: () => import('./pages/projects/projects.module').then(m => m.ProjectsModule)
-      },
-      { path: '', redirectTo: 'projects', pathMatch: 'full' }
+      }
     ]
   }
 ];
