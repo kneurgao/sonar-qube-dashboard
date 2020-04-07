@@ -4,7 +4,7 @@ import { faBug, faUnlockAlt, faRadiationAlt, IconDefinition } from '@fortawesome
 import { faClone } from '@fortawesome/free-regular-svg-icons';
 
 import { DashboardModule } from '../../dashboard/dashboard.module';
-import { SharedService } from '../../dashboard/services/shared/shared.service';
+import { SharedService } from '../shared/shared.service';
 import { ProjectMeasures } from './models/project-measures.model';
 import { Measure } from './models/measure.model';
 import { ProjectTrends } from './models/project-trends.model';

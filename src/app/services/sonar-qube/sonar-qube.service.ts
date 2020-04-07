@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { DashboardModule } from '../../dashboard/dashboard.module';
-import { SharedService } from '../../dashboard/services/shared/shared.service';
+import { SharedService } from '../shared/shared.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DashboardModule } from '../../dashboard.module';
+import { DashboardModule } from '../../dashboard/dashboard.module';
 
 @Injectable({
   providedIn: DashboardModule
