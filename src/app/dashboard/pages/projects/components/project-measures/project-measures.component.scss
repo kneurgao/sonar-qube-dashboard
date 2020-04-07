@@ -1,7 +1,7 @@
 @import '../../../../../../assets/styles/common.scss';
 
 .measures-container {
-  height: 4rem;
+  min-height: 4rem;
 }
 
 @media only screen and (max-width: 575px) {
