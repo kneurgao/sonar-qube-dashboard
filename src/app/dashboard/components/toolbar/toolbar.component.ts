@@ -12,7 +12,7 @@ export class ToolbarComponent {
 
   menuItems = [
     {
-      title: 'Home',
+      title: 'Dashboard',
       path: '/dashboard'
     },
     {

@@ -11,6 +11,7 @@ import { ProjectTrends } from './models/project-trends.model';
 import { Trend } from './models/trend.model';
 import { IssueAssignees } from './models/issue-assignees.model';
 import { Utils } from '../../commons/utils';
+import { ProjectIssues } from './models/project-issues.model';
 
 @Injectable({
   providedIn: DashboardModule
@@ -147,6 +148,25 @@ export class SonarQubeHelper {
     });
 
     return issueAssignees;
+  }
+
+  parseProjectIssues(issueSearchResults: any) {
+    const projectIssues = new ProjectIssues();
+
+    const allProjects = issueSearchResults[0].components;
+    const allProjectsFacet = issueSearchResults[0].facets.find(facet => facet.property === 'projects');
+    const projectsFacet = issueSearchResults[1].facets.find(facet => facet.property === 'projects');
+
+    allProjectsFacet.values.forEach(value1 => {
+      const project = allProjects.find(project1 => project1.key === value1.val);
+      projectIssues.projects.push(project ? project.name : value1.val);
+      projectIssues.allIssues.push(value1.count);
+
+      const fixedIssue = projectsFacet.values.find(value2 => value2.val === value1.val);
+      projectIssues.fixedIssues.push(fixedIssue ? fixedIssue.count : 0);
+    });
+
+    return projectIssues;
   }
 
 }
