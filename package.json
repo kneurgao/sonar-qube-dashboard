@@ -28,7 +28,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.2",
     "angular-highcharts": "^9.0.2",
     "bootstrap": "^4.4.1",
-    "highcharts": "^8.0.4",
+    "highcharts": "^8.1.1",
     "jquery": "^3.5.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
